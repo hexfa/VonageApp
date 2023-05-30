@@ -29,6 +29,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        buildTypes.each {
+            /* Add your OpenTok Session Id in Double quote Ex. "<session_id>" */
+            it.buildConfigField 'String', 'SESSION_ID', '"2_MX40NzcyMDQyMX5-MTY4NTM3MzMwMTQ1MH5GcUxqRUd1dUkwK3RjOVRhRXZDSDFyU2p-fn4"'
+            /* Add your OpenTok API key in Double quote Ex. "<api key>" */
+            it.buildConfigField 'String', 'API_KEY', '"47720421"'
+            /* Add your OpenTok Token in Double quote Ex. "<token>" */
+            it.buildConfigField 'String', 'TOKEN','"T1==cGFydG5lcl9pZD00NzcyMDQyMSZzaWc9YTZmYzU0NDA4YzA3NjZiMWQ3YmI2N2FjMDJjNDZkMzM3ZmM0N2U0MjpzZXNzaW9uX2lkPTJfTVg0ME56Y3lNRFF5TVg1LU1UWTROVE0zTXpNd01UUTFNSDVHY1V4cVJVZDFkVWt3SzNSak9WUmhSWFpEU0RGeVUycC1mbjQmY3JlYXRlX3RpbWU9MTY4NTM3MzM0NyZub25jZT0wLjc1NDA2NzgxMzAxMDU4MjImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTY4Nzk2NTM0NiZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ=="'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -99,5 +108,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+
 }
 
