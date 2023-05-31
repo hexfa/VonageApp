@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.vonageapp.databinding.FragmentVonageBinding
@@ -52,7 +53,7 @@ class VonageFragment : Fragment() {
         binding = FragmentVonageBinding.inflate(inflater, container, false)
 
         binding!!.btnMuteAudio.setOnClickListener {
-            muteCall()
+            muteCall(it)
         }
 
         binding!!.btnCallEnd.setOnClickListener {
@@ -231,7 +232,7 @@ class VonageFragment : Fragment() {
         }
     }
 
-    private fun muteCall(){
+    private fun muteCall(view: View) {
         if (audioEnabled) {
             (view as FloatingActionButton).setImageDrawable(
                 ContextCompat.getDrawable(
