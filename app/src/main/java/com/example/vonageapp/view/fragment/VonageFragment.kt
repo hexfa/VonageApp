@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.vonageapp.databinding.FragmentVonageBinding
 import com.example.vonageapp.view.util.OpenTokConfig
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.opentok.android.BaseVideoRenderer
 import com.opentok.android.OpentokError
 import com.opentok.android.Publisher
@@ -33,6 +35,8 @@ class VonageFragment : Fragment() {
     private var subscriber: Subscriber? = null
     private val TAG = VonageFragment::class.java.simpleName
     val PERMISSIONS_REQUEST_CODE = 124
+    private var audioEnabled = true
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +51,13 @@ class VonageFragment : Fragment() {
     ): View {
         binding = FragmentVonageBinding.inflate(inflater, container, false)
 
+        binding!!.btnMuteAudio.setOnClickListener {
+            muteCall()
+        }
+
+        binding!!.btnCallEnd.setOnClickListener {
+            callEnd()
+        }
         // Inflate the layout for this fragment
         return binding!!.root
     }
@@ -204,6 +215,41 @@ class VonageFragment : Fragment() {
         if (subscriber != null) {
             subscriber = null
             binding?.subscriberContainer?.removeAllViews()
+        }
+    }
+
+    private fun callEnd(){
+        if (session != null) {
+            publisher?.destroy()
+            subscriber?.destroy()
+            session?.disconnect()
+            publisher = null
+            subscriber = null
+            session = null
+            binding?.publisherContainer?.removeAllViews()
+            binding?.subscriberContainer?.removeAllViews()
+        }
+    }
+
+    private fun muteCall(){
+        if (audioEnabled) {
+            (view as FloatingActionButton).setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    com.example.vonageapp.R.drawable.ic_mic_off
+                )
+            )
+            audioEnabled = false
+            publisher?.publishAudio = false
+        } else {
+            (view as FloatingActionButton).setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    com.example.vonageapp.R.drawable.ic_mic_none
+                )
+            )
+            audioEnabled = true
+            publisher?.publishAudio = true
         }
     }
 }
